@@ -38,4 +38,4 @@ The **code** is released under the GPL v3 license. See the included LICENSE.md f
 
 Distributed as-is; no warranty is given.
 
-- Your friends at SparkFun.
+\- Your friends at SparkFun.
