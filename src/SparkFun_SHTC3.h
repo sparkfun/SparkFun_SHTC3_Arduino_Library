@@ -49,7 +49,6 @@ private:
 protected:
 
 	TwoWire* 	_wire;
-	uint32_t	_clkFreq;
 
 	SHTC3_MeasurementModes_TypeDef _mode;
 
@@ -83,7 +82,7 @@ public:
 	float toDegF();																						// Returns the floating point value of T in deg F
 	float toPercent();																					// Returns the floating point value of RH in % RH
 
-	SHTC3_Status_TypeDef	begin(TwoWire &wirePort = Wire, uint32_t speed = 400000);					// Initializes the sensor
+	SHTC3_Status_TypeDef	begin(TwoWire &wirePort = Wire);											// Initializes the sensor
 	SHTC3_Status_TypeDef 	softReset();																// Resets the sensor into a known state through software
 	SHTC3_Status_TypeDef	checkID();																	// Asks the sensor for the ID and checks that value against a CRC checksum
 	SHTC3_Status_TypeDef	sleep(bool hold = false);													// Wakes up the sensor. If hold is true then sets _staySleeping to false 

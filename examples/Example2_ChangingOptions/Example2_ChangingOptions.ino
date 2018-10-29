@@ -22,7 +22,7 @@
 
 #define WIRE_PORT   Wire    // This allows you to choose another Wire port (as long as your board supports more than one) 
 #define WIRE_SPEED  800000  // 800 kHz is the fastest speed that worked on the Uno, but the sensor is rated for up to 1 MHz
-
+//#define WIRE_SPEED SHTC3_MAX_CLOCK_FREQ // This is just to show you that there is a defined constant for the maximum rated speed. You might be able to use this speed depending on the microcontroller you use
 SHTC3 mySHTC3;              // Declare an instance of the SHTC3 class
 
 void setup() {
@@ -32,7 +32,12 @@ void setup() {
   SERIAL_PORT.println();
 
   SERIAL_PORT.print("Beginning sensor. Result = ");           // Most SHTC3 functions return a variable of the type "SHTC3_Status_TypeDef" to indicate the status of their execution 
-  errorDecoder(mySHTC3.begin(WIRE_PORT, WIRE_SPEED));         // Calling "begin()" with port and speed arguments allows you to reassign the interface to the sensor
+  errorDecoder(mySHTC3.begin(WIRE_PORT));                     // Calling "begin()" with the port argument allows you to reassign the interface to the sensor
+  #if(WIRE_SPEED <= SHTC3_MAX_CLOCK_FREQ)                     // You can boost the speed of the I2C interface, but keep in mind that other I2C sensors may not support as high a speed!
+    WIRE_PORT.setClock(WIRE_SPEED);                             
+  #else
+     WIRE_PORT.setClock(SHTC3_MAX_CLOCK_FREQ);
+  #endif
   SERIAL_PORT.println();
 
   if(mySHTC3.passIDcrc)                                       // Whenever data is received the associated checksum is calculated and verified so you can be sure the data is true

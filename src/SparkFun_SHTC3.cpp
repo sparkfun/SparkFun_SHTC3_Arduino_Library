@@ -108,20 +108,20 @@ float SHTC3::toPercent()
 	return SHTC3_raw2Percent(RH);
 }
 
-SHTC3_Status_TypeDef	SHTC3::begin(TwoWire &wirePort, uint32_t speed)
+SHTC3_Status_TypeDef	SHTC3::begin(TwoWire &wirePort)
 {
 	SHTC3_Status_TypeDef retval = SHTC3_Status_Nominal;;
 
 	_wire = &wirePort;																	// Associate the I2C port
-	_clkFreq = speed;																	// Associate the desired speed
+	// _clkFreq = speed;																	// Associate the desired speed
 
-	if(_clkFreq > SHTC3_MAX_CLOCK_FREQ)													// Throttle the clock speen
-	{
-		_clkFreq = SHTC3_MAX_CLOCK_FREQ;
-	}
+	// if(_clkFreq > SHTC3_MAX_CLOCK_FREQ)													// Throttle the clock speen
+	// {
+	// 	_clkFreq = SHTC3_MAX_CLOCK_FREQ;
+	// }
 
 	_wire->begin();																		// Start I2C
-	_wire->setClock(_clkFreq);															// Change I2C clock speed
+	// _wire->setClock(_clkFreq);															// Change I2C clock speed
 
 
 	retval = startProcess();																		// Multiple commands will go to the sensor before sleeping

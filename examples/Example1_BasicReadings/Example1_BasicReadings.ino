@@ -29,7 +29,8 @@ void setup() {
   SERIAL_PORT.println();
 
   SERIAL_PORT.print("Beginning sensor. Result = ");           // Most SHTC3 functions return a variable of the type "SHTC3_Status_TypeDef" to indicate the status of their execution 
-  errorDecoder(mySHTC3.begin());                              // To start the sensor you must call "begin()", the defualt settings use Wire (default Arduino I2C port) at 400 kHz clock speed  
+  errorDecoder(mySHTC3.begin());                              // To start the sensor you must call "begin()", the default settings use Wire (default Arduino I2C port)
+  Wire.setClock(400000);                                      // The sensor is listed to work up to 1 MHz I2C speed, but the I2C clock speed is global for all sensors on that bus so using 400kHz or 100kHz is recommended
   SERIAL_PORT.println();
 
   if(mySHTC3.passIDcrc)                                       // Whenever data is received the associated checksum is calculated and verified so you can be sure the data is true
