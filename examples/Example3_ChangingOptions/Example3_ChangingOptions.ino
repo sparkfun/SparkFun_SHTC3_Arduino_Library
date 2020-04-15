@@ -18,39 +18,38 @@
 
 #include "SparkFun_SHTC3.h" // Click here to get the library: http://librarymanager/All#SparkFun_SHTC3
 
-#define SERIAL_PORT Serial  // #define-ing the SERIAL_PORT allows you to easily change your target port - for example if you are using a SAMD21 board you can change "Serial" to "SerialUSB"
-
 #define WIRE_PORT   Wire    // This allows you to choose another Wire port (as long as your board supports more than one) 
 #define WIRE_SPEED  800000  // 800 kHz is the fastest speed that worked on the Uno, but the sensor is rated for up to 1 MHz
 //#define WIRE_SPEED SHTC3_MAX_CLOCK_FREQ // This is just to show you that there is a defined constant for the maximum rated speed. You might be able to use this speed depending on the microcontroller you use
 SHTC3 mySHTC3;              // Declare an instance of the SHTC3 class
 
 void setup() {
-  SERIAL_PORT.begin(115200);                                  // Begin Serial 
-  while(SERIAL_PORT == false){};                                   // Wait for the serial connection to start up
-  SERIAL_PORT.println("SHTC3 Example 2 - Changing Options");    // Title
-  SERIAL_PORT.println();
-
-  SERIAL_PORT.print("Beginning sensor. Result = ");           // Most SHTC3 functions return a variable of the type "SHTC3_Status_TypeDef" to indicate the status of their execution 
-  errorDecoder(mySHTC3.begin(WIRE_PORT));                     // Calling "begin()" with the port argument allows you to reassign the interface to the sensor
+  Serial.begin(115200);                                  // Begin Serial 
+  while(Serial == false){};                                   // Wait for the serial connection to start up
+  Serial.println("SHTC3 Example 3 - Changing Options");    // Title
+  Serial.println();
+  WIRE_PORT.begin();
   #if(WIRE_SPEED <= SHTC3_MAX_CLOCK_FREQ)                     // You can boost the speed of the I2C interface, but keep in mind that other I2C sensors may not support as high a speed!
     WIRE_PORT.setClock(WIRE_SPEED);                             
   #else
-     WIRE_PORT.setClock(SHTC3_MAX_CLOCK_FREQ);
+    WIRE_PORT.setClock(SHTC3_MAX_CLOCK_FREQ);
   #endif
-  SERIAL_PORT.println();
+
+  Serial.print("Beginning sensor. Result = ");           // Most SHTC3 functions return a variable of the type "SHTC3_Status_TypeDef" to indicate the status of their execution 
+  errorDecoder(mySHTC3.begin(WIRE_PORT));                     // Calling "begin()" with the port argument allows you to reassign the interface to the sensor
+  Serial.println();
 
   if(mySHTC3.passIDcrc)                                       // Whenever data is received the associated checksum is calculated and verified so you can be sure the data is true
   {                                                           // The checksum pass indicators are: passIDcrc, passRHcrc, and passTcrc for the ID, RH, and T readings respectively
-    SERIAL_PORT.print("ID Passed Checksum. ");
-    SERIAL_PORT.print("Device ID: 0b"); 
-    SERIAL_PORT.print(mySHTC3.ID, BIN);                       // The 16-bit device ID can be accessed as a member variable of the object
+    Serial.print("ID Passed Checksum. ");
+    Serial.print("Device ID: 0b"); 
+    Serial.print(mySHTC3.ID, BIN);                       // The 16-bit device ID can be accessed as a member variable of the object
   }
   else
   {
-    SERIAL_PORT.print("ID Checksum Failed. ");
+    Serial.print("ID Checksum Failed. ");
   }
-  SERIAL_PORT.println("\n");
+  Serial.println("\n");
 
   /*
    * Using "setMode" specifies how the measurements will be taken. Options are:
@@ -69,16 +68,16 @@ void setup() {
   sends the data out. The library will correctly handle either direction and provide
   you with RH and T in the corresponding member variables of your sensor
    */
-  SERIAL_PORT.print("Choosing low-power measurements with T first: ");
+  Serial.print("Choosing low-power measurements with T first: ");
   if(mySHTC3.setMode(SHTC3_CMD_CSE_TF_LPM) == SHTC3_Status_Nominal)
   {
-    SERIAL_PORT.print(" successful");
+    Serial.print(" successful");
   }
   else
   {
-    SERIAL_PORT.print(" failed");
+    Serial.print(" failed");
   }
-  SERIAL_PORT.println("\n");
+  Serial.println("\n");
 
 
   /*
@@ -89,18 +88,18 @@ void setup() {
 
   The sensor begins in the sleep(true) state.
    */
-  SERIAL_PORT.print("Setting the sensor to stay awake at all times: ");
+  Serial.print("Setting the sensor to stay awake at all times: ");
   if(mySHTC3.wake(true) == SHTC3_Status_Nominal)
   {
-    SERIAL_PORT.print(" successful");
+    Serial.print(" successful");
   }
   else
   {
-    SERIAL_PORT.print(" failed");
+    Serial.print(" failed");
   }
-  SERIAL_PORT.println("\n\n");
+  Serial.println("\n\n");
   
-  SERIAL_PORT.println("Waiting for 5 seconds so you can read this info ^^^ \n");
+  Serial.println("Waiting for 5 seconds so you can read this info ^^^ \n");
 
   delay(5000);                                                // Give time to read the welcome message and device ID. 
 }
@@ -111,8 +110,6 @@ void loop() {
   delay(190);                                                 // Delay for the data rate you want - note that measurements take ~10 ms so the fastest data rate is 100 Hz (when no delay is used)
 }
 
-
-
 ///////////////////////
 // Utility Functions //
 ///////////////////////
@@ -120,35 +117,35 @@ void printInfo()
 {
   if(mySHTC3.lastStatus == SHTC3_Status_Nominal)              // You can also assess the status of the last command by checking the ".lastStatus" member of the object
   {
-    SERIAL_PORT.print("RH = "); 
-    SERIAL_PORT.print(mySHTC3.toPercent());                   // "toPercent" returns the percent humidity as a floating point number
-    SERIAL_PORT.print("% (checksum: "); 
+    Serial.print("RH = "); 
+    Serial.print(mySHTC3.toPercent());                   // "toPercent" returns the percent humidity as a floating point number
+    Serial.print("% (checksum: "); 
     if(mySHTC3.passRHcrc)                                     // Like "passIDcrc" this is true when the RH value is valid from the sensor (but not necessarily up-to-date in terms of time)
     {
-      SERIAL_PORT.print("pass");
+      Serial.print("pass");
     }
     else
     {
-      SERIAL_PORT.print("fail");
+      Serial.print("fail");
     }
-    SERIAL_PORT.print("), T = "); 
-    SERIAL_PORT.print(mySHTC3.toDegF());                        // "toDegF" and "toDegC" return the temperature as a flaoting point number in deg F and deg C respectively 
-    SERIAL_PORT.print(" deg F (checksum: "); 
+    Serial.print("), T = "); 
+    Serial.print(mySHTC3.toDegF());                        // "toDegF" and "toDegC" return the temperature as a flaoting point number in deg F and deg C respectively 
+    Serial.print(" deg F (checksum: "); 
     if(mySHTC3.passTcrc)                                        // Like "passIDcrc" this is true when the T value is valid from the sensor (but not necessarily up-to-date in terms of time)
     {
-      SERIAL_PORT.print("pass");
+      Serial.print("pass");
     }
     else
     {
-      SERIAL_PORT.print("fail");
+      Serial.print("fail");
     }
-    SERIAL_PORT.println(")");
+    Serial.println(")");
   }
   else
   {
-    SERIAL_PORT.print("Update failed, error: "); 
+    Serial.print("Update failed, error: "); 
     errorDecoder(mySHTC3.lastStatus);
-    SERIAL_PORT.println();
+    Serial.println();
   }
 }
 
@@ -156,9 +153,9 @@ void errorDecoder(SHTC3_Status_TypeDef message)                             // T
 {
   switch(message)
   {
-    case SHTC3_Status_Nominal : SERIAL_PORT.print("Nominal"); break;
-    case SHTC3_Status_Error : SERIAL_PORT.print("Error"); break;
-    case SHTC3_Status_CRC_Fail : SERIAL_PORT.print("CRC Fail"); break;
-    default : SERIAL_PORT.print("Unknown return code"); break;
+    case SHTC3_Status_Nominal : Serial.print("Nominal"); break;
+    case SHTC3_Status_Error : Serial.print("Error"); break;
+    case SHTC3_Status_CRC_Fail : Serial.print("CRC Fail"); break;
+    default : Serial.print("Unknown return code"); break;
   }
 }

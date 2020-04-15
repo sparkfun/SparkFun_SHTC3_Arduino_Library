@@ -120,10 +120,6 @@ SHTC3_Status_TypeDef	SHTC3::begin(TwoWire &wirePort)
 	// 	_clkFreq = SHTC3_MAX_CLOCK_FREQ;
 	// }
 
-	_wire->begin();																		// Start I2C
-	// _wire->setClock(_clkFreq);															// Change I2C clock speed
-
-
 	retval = startProcess();																		// Multiple commands will go to the sensor before sleeping
 	if(retval != SHTC3_Status_Nominal){ return exitOp(retval, __FILE__, __LINE__); }
 
