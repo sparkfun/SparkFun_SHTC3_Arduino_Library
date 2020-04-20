@@ -54,7 +54,7 @@ void printInfo()
     Serial.print(mySHTC3.toPercent());                        // "toPercent" returns the percent humidity as a floating point number
     Serial.print("%, T = "); 
     Serial.print(mySHTC3.toDegF());                           // "toDegF" and "toDegC" return the temperature as a flaoting point number in deg F and deg C respectively 
-    Serial.println(" deg F); 
+    Serial.println(" deg F"); 
   }
   else
   {
