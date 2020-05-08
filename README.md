@@ -1,7 +1,7 @@
 SparkFun SHTC3 Humidity and Temperature Sensor Library 
 ========================================
 
-[![SparkFun Humidity Sensor - SHTC3 (Qwiic)](https://cdn.sparkfun.com/assets/parts/1/5/3/3/0/16467-SparkFun_Humidity_Sensor_Breakout_-_SHTC3__Qwiic_-01.jpg)](https://cdn.sparkfun.com/assets/parts/1/5/3/3/0/16467-SparkFun_Humidity_Sensor_Breakout_-_SHTC3__Qwiic_-01.jpg)
+[![SparkFun Humidity Sensor - SHTC3 (Qwiic)](https://cdn.sparkfun.com/assets/parts/1/5/3/3/0/16467-SparkFun_Humidity_Sensor_Breakout_-_SHTC3__Qwiic_-01.jpg)](https://www.sparkfun.com/products/16467)
 
 [*SparkFun Humidity Sensor - SHTC3 (Qwiic)*](https://www.sparkfun.com/products/16467)
 
@@ -20,11 +20,13 @@ Documentation
 --------------
 
 * **[Installing an Arduino Library Guide](https://learn.sparkfun.com/tutorials/installing-an-arduino-library)** - Basic information on how to install an Arduino library.
+* **[Hookup Guide](https://learn.sparkfun.com/tutorials/sparkfun-humidity-sensor-breakout---shtc3-qwiic-hookup-guide)** - Basic hookup guide for the Humidity Sensor - SHTC3 (Qwiic).
 
 Products that use this Library 
 ---------------------------------
-* [SparkFun Humidity Sensor - SHTC3 (Qwiic)*](https://www.sparkfun.com/products/16467)
+* [SparkFun Humidity Sensor - SHTC3 (Qwiic)](https://www.sparkfun.com/products/16467)
 * [SparkX Humidity Sensor Breakout SHTC3 (Qwiic)](https://www.sparkfun.com/products/15074)
+
 
 Version History
 ---------------
