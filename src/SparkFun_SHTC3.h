@@ -60,9 +60,9 @@ protected:
 	bool _isAsleep;		// Used to indicate if a wake() command is needed before talking
 
 	SHTC3_Status_TypeDef sendCommand(SHTC3_Commands_TypeDef cmd);
-	SHTC3_Status_TypeDef sendCommand(SHTC3_MeasurementModes_TypeDef cmd);					  // Overloaded version of send command to support the "measurement type" commands
-	SHTC3_Status_TypeDef abortUpdate(SHTC3_Status_TypeDef status, char *file, uint16_t line); // Used to bail from an update. Sets reading values to known fail state
-	SHTC3_Status_TypeDef exitOp(SHTC3_Status_TypeDef status, char *file, uint16_t line);	  // Used to bail from any other operation - puts the sensor back to sleep
+	SHTC3_Status_TypeDef sendCommand(SHTC3_MeasurementModes_TypeDef cmd);							// Overloaded version of send command to support the "measurement type" commands
+	SHTC3_Status_TypeDef abortUpdate(SHTC3_Status_TypeDef status, const char *file, uint16_t line); // Used to bail from an update. Sets reading values to known fail state
+	SHTC3_Status_TypeDef exitOp(SHTC3_Status_TypeDef status, const char *file, uint16_t line);		// Used to bail from any other operation - puts the sensor back to sleep
 
 	SHTC3_Status_TypeDef startProcess(void); // Used to wake up the sensor and set the _inProcess variable to true
 	SHTC3_Status_TypeDef endProcess(void);	 // Used to end processes as the user desires
@@ -101,6 +101,6 @@ float SHTC3_raw2DegC(uint16_t T);	  // Converts SHTC3 T data to deg C
 float SHTC3_raw2DegF(uint16_t T);	  // Converts SHTC3 T data to deg F
 float SHTC3_raw2Percent(uint16_t RH); // Converts SHTC3 RH data to % RH
 
-void SHTC3_exitOp_Callback(SHTC3_Status_TypeDef status, bool inProcess, char *file, uint16_t line) __attribute__((weak)); // Called whenever exitOp is called, which is on most return statements
+void SHTC3_exitOp_Callback(SHTC3_Status_TypeDef status, bool inProcess, const char *file, uint16_t line) __attribute__((weak)); // Called whenever exitOp is called, which is on most return statements
 
 #endif /* SF_SHTC3 */

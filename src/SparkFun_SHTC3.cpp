@@ -28,7 +28,7 @@ SHTC3_Status_TypeDef SHTC3::sendCommand(SHTC3_MeasurementModes_TypeDef cmd)
 	return sendCommand((SHTC3_Commands_TypeDef)cmd);
 }
 
-SHTC3_Status_TypeDef SHTC3::abortUpdate(SHTC3_Status_TypeDef status, char *file, uint16_t line) // Sets the values to a known error state
+SHTC3_Status_TypeDef SHTC3::abortUpdate(SHTC3_Status_TypeDef status, const char *file, uint16_t line) // Sets the values to a known error state
 {
 	passRHcrc = false;
 	passTcrc = false;
@@ -41,7 +41,7 @@ SHTC3_Status_TypeDef SHTC3::abortUpdate(SHTC3_Status_TypeDef status, char *file,
 	return exitOp(status, file, line);
 }
 
-SHTC3_Status_TypeDef SHTC3::exitOp(SHTC3_Status_TypeDef status, char *file, uint16_t line)
+SHTC3_Status_TypeDef SHTC3::exitOp(SHTC3_Status_TypeDef status, const char *file, uint16_t line)
 {
 	lastStatus = status;
 	SHTC3_exitOp_Callback(status, _inProcess, file, line);
@@ -403,7 +403,9 @@ SHTC3_Status_TypeDef SHTC3::update()
 
 SHTC3_Status_TypeDef SHTC3::checkCRC(uint16_t packet, uint8_t cs)
 {
-	uint8_t data[2] = {((packet & 0xFF00) >> 8), ((packet & 0x00FF) >> 0)};
+	uint8_t upper = packet >> 8;
+	uint8_t lower = packet & 0x00FF;
+	uint8_t data[2] = {upper, lower};
 	uint8_t crc = 0xFF;
 	uint8_t poly = 0x31;
 
@@ -446,4 +448,4 @@ float SHTC3_raw2Percent(uint16_t RH)
 	return 100 * ((float)RH / 65535);
 }
 
-void SHTC3_exitOp_Callback(SHTC3_Status_TypeDef status, bool inProcess, char *file, uint16_t line) {} // Empty implementation. You can make your own implementation
+void SHTC3_exitOp_Callback(SHTC3_Status_TypeDef status, bool inProcess, const char *file, uint16_t line) {} // Empty implementation. You can make your own implementation
