@@ -169,11 +169,6 @@ SHTC3_Status_TypeDef SHTC3::checkID()
 		return abortUpdate(retval, __FILE__, __LINE__);
 	}
 
-	while (_wire->available()) // Clear out the I2C buffer, jic
-	{
-		_wire->read();
-	}
-
 	retval = wake();
 	if (retval != SHTC3_Status_Nominal)
 	{
@@ -316,10 +311,6 @@ SHTC3_Status_TypeDef SHTC3::update()
 	case SHTC3_CMD_CSE_RHF_LPM:
 	case SHTC3_CMD_CSE_TF_NPM:
 	case SHTC3_CMD_CSE_TF_LPM:	   // Address+read will yield an ACK and then clock stretching will occur
-		while (_wire->available()) // Clear out the I2C buffer so that we know our data is next
-		{
-			_wire->read();
-		}
 		numBytesRx = _wire->requestFrom(SHTC3_ADDR_7BIT, numBytesRequest);
 		break;
 
