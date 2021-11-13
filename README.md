@@ -24,8 +24,10 @@ Documentation
 
 Products that use this Library 
 ---------------------------------
-* [SparkFun Humidity Sensor - SHTC3 (Qwiic)](https://www.sparkfun.com/products/16467)
-* [SparkX Humidity Sensor Breakout SHTC3 (Qwiic)](https://www.sparkfun.com/products/15074)
+
+* [SEN-18632](https://www.sparkfun.com/products/18632) - SparkFun MicroMod Environmental Function Board with SGP40, STC31, and SHTC3
+* [SEN-16467](https://www.sparkfun.com/products/16467) - SparkFun Humidity Sensor - SHTC3 (Qwiic)
+* [SPX-15074](https://www.sparkfun.com/products/15074) - SparkX Humidity Sensor Breakout SHTC3 (Qwiic)
 
 
 Version History
