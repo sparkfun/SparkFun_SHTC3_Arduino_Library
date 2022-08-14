@@ -201,7 +201,7 @@ SHTC3_Status_TypeDef SHTC3::checkID()
 		passIDcrc = true;
 	}
 
-	if ((ID & 0b0000100000111111) != 0b0000100000000111)		 // Checking the form of the ID
+	if ((ID & 0b0000100000000111) != 0b0000100000000111)		 // Checking the form of the ID
 	{															 // Bits 11 and 5-0 must match
 		return exitOp(SHTC3_Status_ID_Fail, __FILE__, __LINE__); // to identify an SHTC3
 	}
